@@ -15,20 +15,16 @@ public class WebApp {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         server.createContext("/", handler -> {
-            for (int i=0; i<100; i++) {
-                new Thread((new Runnable() {
-                    int n;
-                    public Runnable arg(int n) {
-                          this.n = n;
-                          return this;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i=0; i<100; i++) {
+                        int answer = fib(i);
+                        System.out.printf("fib(%d) = %d\n", i, answer);
                     }
-                    @Override
-                    public void run() {
-                        int answer = fib(n);
-                        System.out.printf("fib(%d) = %d\n", n, answer);
-                    }
-                }).arg(i)).start();
-            }
+                }
+            }).start();
+
             byte[] response = "hello, world\n".getBytes();
             handler.sendResponseHeaders(200, response.length);
             try (OutputStream os = handler.getResponseBody()) {
