@@ -2,9 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  for (let i = 1; i <= 100; i++) {
-    fib(i).then(r => console.log(`fib(${i}) = ${r}`));
-  }
+  setTimeout(_fib, 25); // async doesn't work properly ;(
   const name = process.env.NAME || 'World';
   res.send(`Hello ${name}!\n`);
 });
@@ -14,9 +12,14 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-async function fib(n) {
-	if (n > 1) {
-    return (await fib(n - 2)) + (await fib(n - 1));
-	}
-  return n;
+async function _fib() {
+  for (let i = 1; i <= 100; i++) {
+    console.log(`fib(${i}) = ${fib(i)}`);
+  }
+  function fib(n) {
+    if (n > 1) {
+      return fib(n - 2) + fib(n - 1);
+    }
+    return n;
+  }
 }
