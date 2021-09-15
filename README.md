@@ -44,3 +44,14 @@ gcloud beta run deploy "${SERVICE_NAME}" --source nodejs --platform managed --re
 SERVICE_NAME=bg-java
 gcloud beta run deploy "${SERVICE_NAME}" --source java --platform managed --region asia-northeast1 --no-allow-unauthenticated --quiet --no-cpu-throttling
 ```
+
+# Kotlin
+
+[こちらのサンプル](https://github.com/knative/docs/tree/main/docs/serving/samples/hello-world/helloworld-kotlin) をベースに、Kotlin の coroutine を使った非同期処理を加えました。
+
+```bash
+SERVICE_NAME=bg-kotlin
+IMAGE_NAME="gcr.io/$(gcloud config get-value project)/${SERVICE_NAME}"
+gcloud builds submit kotlin --tag="${IMAGE_NAME}"
+gcloud beta run deploy "${SERVICE_NAME}" --image "${IMAGE_NAME}" --platform managed --region asia-northeast1 --no-allow-unauthenticated --quiet --no-cpu-throttling
+```
