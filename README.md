@@ -55,3 +55,14 @@ IMAGE_NAME="gcr.io/$(gcloud config get-value project)/${SERVICE_NAME}"
 gcloud builds submit kotlin --tag="${IMAGE_NAME}"
 gcloud beta run deploy "${SERVICE_NAME}" --image "${IMAGE_NAME}" --platform managed --region asia-northeast1 --no-allow-unauthenticated --quiet --no-cpu-throttling
 ```
+
+# Dart
+
+[こちらのサンプル](https://github.com/dart-lang/samples/tree/master/server/simple) をベースに、Dart の async を使った非同期処理を加えました。
+
+```bash
+SERVICE_NAME=bg-dart
+IMAGE_NAME="gcr.io/$(gcloud config get-value project)/${SERVICE_NAME}"
+gcloud builds submit dart --tag="${IMAGE_NAME}"
+gcloud beta run deploy "${SERVICE_NAME}" --image "${IMAGE_NAME}" --platform managed --region asia-northeast1 --no-allow-unauthenticated --quiet --no-cpu-throttling
+```
